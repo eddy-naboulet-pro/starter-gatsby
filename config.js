@@ -1,0 +1,1 @@
+export const apiEndpoint = 'https://eddy-starter-prismic.prismic.io/api/v2'
