@@ -1,8 +1,7 @@
-import * as React from "react"
+import React from "react"
 import { Helmet } from "react-helmet"
-import { useLocation } from "@reach/router"
-import { breadcrumbList, BreadcrumbListItem } from "../constants/json-ld"
-import { useSiteMetadata } from "../hooks/use-site-metadata"
+import { breadcrumbList, BreadcrumbListItem } from "../../constants/json-ld"
+import { useSiteMetadata } from "../../hooks/use-site-metadata"
 
 type SEOProps = {
   title?: string
@@ -22,18 +21,18 @@ export const SEO: React.FC<SEOProps> = ({
   breadcrumbListItems = [],
   children,
 }) => {
-  const { href } = useLocation()
   const { siteTitle, siteTitleDefault, siteUrl, siteDescription, siteImage, twitter } = useSiteMetadata()
 
   const seo = {
     title: title || siteTitleDefault,
     description: description || siteDescription,
-    url: pathname ? `${siteUrl}${pathname}` : href,
+    url: `${siteUrl}${pathname}`,
     image: `${siteUrl}${image || siteImage}`,
   }
 
   return (
-    <Helmet title={title} defaultTitle={siteTitleDefault} titleTemplate={`%s | ${siteTitle}`}>
+    //@ts-ignore: Unreachable code error
+    <Helmet>
       <html lang="en-US" />
       <meta name="description" content={seo.description} />
       <meta name="image" content={seo.image} />
@@ -56,6 +55,7 @@ export const SEO: React.FC<SEOProps> = ({
       <meta name="twitter:creator" content={twitter} />
       <meta name="creator" content="LekoArts" />
       <meta name="msapplication-TileColor" content="#0f172a" />
+      <title>{seo.title}</title>
       {noIndex && <meta name="robots" content="noindex, nofollow" />}
       {breadcrumbListItems.length >= 1 && (
         <script type="application/ld+json">{JSON.stringify(breadcrumbList(breadcrumbListItems))}</script>
