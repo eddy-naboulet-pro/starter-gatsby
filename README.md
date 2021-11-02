@@ -4,18 +4,19 @@
   </a>
 </p>
 <h1 align="center">
-  Gatsby minimal starter
+  Gatsby/Prismic starter
 </h1>
 
 ## 🚀 Quick start
 
 1.  **Create a Gatsby site.**
+  
 
-    Use the Gatsby CLI to create a new site, specifying the minimal starter.
+    Use the Prismic CLI to create a new site, specifying the minimal starter.
 
     ```shell
     # create a new Gatsby site using the minimal starter
-    npm init gatsby
+    prismic theme --theme-url https://github.com/eddy-naboulet-pro/starter-test.git --conf prismic-config.js
     ```
 
 2.  **Start developing.**
