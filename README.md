@@ -16,7 +16,7 @@
 
     ```shell
     # create a new Gatsby site using the minimal starter
-    prismic theme --theme-url https://github.com/eddy-naboulet-pro/starter-test.git --conf prismic-config.js
+    prismic theme --theme-url https://github.com/eddy-naboulet-pro/starter-gatsby.git --conf prismic-config.js
     ```
 
 2.  **Start developing.**
