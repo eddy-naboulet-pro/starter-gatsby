@@ -1,12 +1,13 @@
 import * as React from "react"
+import *  as scss from './SkipNav.module.scss'
 
 const defaultId = `skip-to-content`
-
 const SkipNavLink: React.FC<{ contentId?: string }> = ({ children = `Skip to content`, contentId, ...props }) => {
   const id = contentId || defaultId
 
   return (
     <a
+      className={scss.root}
       {...props}
       href={`#${id}`}
       data-skip-to-content

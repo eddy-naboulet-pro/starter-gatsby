@@ -1,17 +1,18 @@
 import React from "react"
-import { graphql, PageProps, Link } from "gatsby"
+import { graphql, PageProps } from "gatsby"
 import TransitionLink from 'gatsby-plugin-transition-link'
 
-import * as scss from "./index.module.scss"
-import { SEO } from '../components/seo/Seo'
-import { IPageData } from "../data/dataStruct"
+import * as scss from "./Page.module.scss"
+import { SEO } from '../../components/seo/Seo'
+import Header from '../../components/header/Header'
 
-import Scroll from "../lib/scroll"
+import { IPageData } from "../../data/dataStruct"
+import Scroll from "../../lib/scroll"
 
-const componentName = 'home'
 const Index: React.FC<PageProps<IPageData>> = ({ data }) => {
   const { page } = data
-
+  const componentName = page.uid
+  
   React.useEffect(() => {
     console.log(`%c USEEFFECT FROM ${componentName}`, 'background: black; color: red');
   }, [])
@@ -21,7 +22,7 @@ const Index: React.FC<PageProps<IPageData>> = ({ data }) => {
       <SEO title={page.data.meta_title} description={page.data.meta_description} />
       <h1>Homepage</h1>
       <TransitionLink
-        to='/page-template'
+        to='/'
         exit={{
           trigger: ({ exit, node }) => {
             Scroll.disable()
@@ -34,8 +35,10 @@ const Index: React.FC<PageProps<IPageData>> = ({ data }) => {
             Scroll.reset()
           },
           delay: 0.7,
+
         }}
       >Homepage</TransitionLink>
+      <Header/>
     </div>
   )
 }
@@ -44,9 +47,9 @@ export default Index
 
 // ------------------------------ QUERY
 export const query = graphql`
-  {
-    page: prismicHomepage {
-      ...homepageData
-    }
+query page($uid: String!) {
+  page : prismicPageTemplate(uid: {eq: $uid}) {
+    ...pageTemplateData
   }
+}
 `

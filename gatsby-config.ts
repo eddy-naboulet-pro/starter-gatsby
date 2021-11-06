@@ -13,9 +13,7 @@ const gatsbyConfig: GatsbyConfig = {
     twitter: site.twitter,
   },
   plugins: [
-    `gatsby-plugin-image`,
     `gatsby-plugin-react-helmet`,
-    
     {
       resolve: 'gatsby-plugin-sass',
       options: {
@@ -26,9 +24,11 @@ const gatsbyConfig: GatsbyConfig = {
     {
       resolve: "gatsby-plugin-transition-link",
       options: {
-          layout: require.resolve(`./src/components/layout/Layout.tsx`)
+          layout: require.resolve(`./src/components/layout/Layout.tsx`),
+          injectPageProps: false,
         }
     },
+
     // {
     //   resolve: `gatsby-omni-font-loader`,
     //   options: {
@@ -56,57 +56,36 @@ const gatsbyConfig: GatsbyConfig = {
         background_color: site.background_color,
         theme_color: site.theme_color,
         icon: site.image,
+        cache_busting_mode: 'none',
         icon_options: {
           purpose: `any maskable`,
         }
       }
     },
-    // 'gatsby-plugin-offline',
     // {
-    //   resolve: `gatsby-plugin-offline`,
+    //   resolve: 'gatsby-plugin-offline',
     //   options: {
-    //     workboxConfig: {
-    //       importWorkboxFrom: `cdn`,
-    //     },
-    //   },
+    //      workboxConfig: {
+    //         globPatterns: ['**/icon-path*']
+    //      }
+    //   }
     // },
-
     {
-      resolve: `gatsby-plugin-sitemap`,
-      // options: {
-      //   output: `/`,
-      //   excludes: [
-      //     `/dev-404-page`,
-      //     `/404`,
-      //     `/404.html`,
-      //     `/offline-plugin-app-shell-fallback`,
-      //     `/privacy-policy`,
-      //     `/legal-notice`,
-      //   ],
-      //   query: `
-      //   {
-      //     posts: allPageTemplate(filter: { published: { eq: true } } ) {
-      //       nodes {
-      //         path: slug
-      //         lastmod: lastUpdated
-      //       }
-      //     }
-      //     other: allSitePage(filter: { pluginCreator: { name: { ne: "default-site-plugin" } } } ) {
-      //       nodes {
-      //         path
-      //       }
-      //     }
-      //   }
-      //   `,
-      //   resolveSiteUrl: () => site.url,
-      //   resolvePages: ({ posts, garden, other }) => [].concat(posts.nodes, other.nodes),
-      //   serialize: ({ path, lastmod }) => ({
-      //     url: path,
-      //     lastmod,
-      //   }),
-      // },
+      resolve: "gatsby-source-prismic",
+      options: {
+        repositoryName: process.env.GATSBY_PRISMIC_REPO_NAME,
+        accessToken: process.env.PRISMIC_ACCESS_TOKEN,
+        schemas: {
+          page_template: require("./custom_types/page_template.json"),
+          homepage: require("./custom_types/homepage.json"),
+          site_meta_data: {},
+        },
+      },
     },
-
+    `gatsby-plugin-sitemap`,
+    "gatsby-plugin-image",
+    "gatsby-plugin-sharp",
+    "gatsby-transformer-sharp",
   ],
 }
 

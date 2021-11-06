@@ -4,5 +4,11 @@
     "name": "Page Template",
     "repeatable": true,
     "value": "page_template.json"
+  },
+  {
+    "id": "homepage",
+    "name": "Homepage",
+    "repeatable": false,
+    "value": "homepage.json"
   }
 ]

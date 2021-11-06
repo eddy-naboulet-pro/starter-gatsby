@@ -2,6 +2,7 @@ import React, { createContext, useReducer } from "react"
 
 const initialState = {
   theme: "light",
+  webgl: false
 }
 
 export const GlobalStateContext = createContext(null)
@@ -14,6 +15,12 @@ function reducer(state, action) {
       return {
         ...state,
         theme: state.theme === "light" ? "dark" : "light",
+      }
+    }
+    case "TOGGLE_WEBGL": {
+      return {
+        ...state,
+        webgl: true,
       }
     }
     case "SET_THEME": {

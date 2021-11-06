@@ -1,10 +1,12 @@
-import * as React from "react"
+import React from "react"
+import * as scss from "./index.module.scss"
+import { SEO } from '../components/seo/Seo'
 
 const NotFoundPage = () => {
   return (
-    <main>
-      404
-    </main>
+    <div className={scss.root}>
+      <SEO />
+    </div>
   )
 }
 
