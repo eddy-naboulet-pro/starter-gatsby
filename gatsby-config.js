@@ -13,7 +13,10 @@ require('ts-node').register({
     "skipLibCheck": true,
     "noImplicitAny": false,
     "resolveJsonModule": true,
-  }
+  },
+  "include": [
+    "./src/**/*"
+  ]
 })
 
 require(`ts-node`).register({ transpileOnly: true, files: true })

@@ -3,9 +3,7 @@ import {
   Scene,
   PerspectiveCamera,
   WebGLRenderer,
-  BoxGeometry,
   Mesh,
-  MeshNormalMaterial
 } from "three"
 
 import RAF from "./raf"

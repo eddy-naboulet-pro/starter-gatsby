@@ -21,5 +21,52 @@
         "placeholder" : "Meta Description..."
       }
     }
+  },
+  "CONTENT": {
+    "body": {
+      "type": "Slices",
+      "fieldset": "Slice zone",
+      "config": {
+        "labels": null,
+        "choices": {
+          "cube": {
+            "type": "Slice",
+            "fieldset": "Cube",
+            "description": "Cube (webgl component)",
+            "icon": "3d_rotation",
+            "display": "list",
+            "non-repeat": {
+              "texture": {
+                "type": "Image",
+                "config": {
+                  "constraint": {},
+                  "thumbnails": [],
+                  "label": "Texture"
+                }
+              }
+            },
+            "repeat": {}
+          },
+          "cubes": {
+            "type": "Slice",
+            "fieldset": "Cubes",
+            "description": "Cubes (webgl component)",
+            "icon": "3d_rotation",
+            "display": "list",
+            "non-repeat": {},
+            "repeat": {
+              "texture": {
+                "type": "Image",
+                "config": {
+                  "constraint": {},
+                  "thumbnails": [],
+                  "label": "Texture"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

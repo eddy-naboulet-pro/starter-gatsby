@@ -4,12 +4,12 @@ import TransitionLink from 'gatsby-plugin-transition-link'
 
 import * as scss from "./index.module.scss"
 import { SEO } from '../components/seo/Seo'
-import { IPageData } from "../data/dataStruct"
+import { ISinglePageTemplateData } from "../data/dataStruct"
 
 import Scroll from "../lib/scroll"
 
 const componentName = 'home'
-const Index: React.FC<PageProps<IPageData>> = ({ data }) => {
+const Index: React.FC<PageProps<ISinglePageTemplateData>> = ({ data }) => {
   const { page } = data
 
   React.useEffect(() => {
@@ -21,21 +21,37 @@ const Index: React.FC<PageProps<IPageData>> = ({ data }) => {
       <SEO title={page.data.meta_title} description={page.data.meta_description} />
       <h1>Homepage</h1>
       <TransitionLink
-        to='/page-template'
+        to='/projects'
         exit={{
           trigger: ({ exit, node }) => {
             Scroll.disable()
           },
-          length: 0.5
+          length: 0.05
 
         }}
         entry={{
           trigger: ({ exit, node }) => {
             Scroll.reset()
           },
-          delay: 0.7,
+          delay: 0.1,
         }}
-      >Homepage</TransitionLink>
+      >projects</TransitionLink>
+            <TransitionLink
+        to='/about'
+        exit={{
+          trigger: ({ exit, node }) => {
+            Scroll.disable()
+          },
+          length: 0.05
+
+        }}
+        entry={{
+          trigger: ({ exit, node }) => {
+            Scroll.reset()
+          },
+          delay: 0.1,
+        }}
+      >about</TransitionLink>
     </div>
   )
 }

@@ -1,33 +1,46 @@
 
 import {
-  Scene,
-  PerspectiveCamera,
-  WebGLRenderer,
   BoxGeometry,
   Mesh,
-  MeshNormalMaterial,
-  RectAreaLight
+  MeshBasicMaterial,
+  Texture
 } from "three"
 
-import RAF from "../../lib/raf"
-import SCROLL from "../../lib/scroll"
-import RESIZE from "../../lib/eventsResize"
-import CANVAS from "../../lib/canvas"
+import raf from "../../lib/raf"
+import scroll from "../../lib/scroll"
+import resize from "../../lib/eventsResize"
+import canvas from "../../lib/canvas"
 
 interface Cube {
   cube : Mesh
+  domElement: HTMLElement
+  texture: Texture
+  height: number
+  width: number
+  bounds: {
+    top: number
+    left: number
+    width: number
+    height: number
+  }
 }
 
 class Cube {
+  constructor(texture: Texture, domElement: HTMLElement) {
+    this.texture = texture
+    this.domElement = domElement
+    this.init()
+  }
 
   init() {
     this.bind()
 
+    this.createBounds()
     this.createCube()
     this.onResize()
 
-    RAF.subscribe('WEBGLCUBE',this.update)
-    RESIZE.subscribe('resizeCUBE', this.onResize)
+    raf.subscribe('WEBGLCUBE',this.update)
+    resize.subscribe('resizeCUBE', this.onResize)
   }
 
   bind() {
@@ -37,35 +50,52 @@ class Cube {
   }
 
   // ------------------------------------------------ SETUP
+  createBounds() {
+    const bounds = this.domElement.getBoundingClientRect()
+
+    this.height = canvas.container.offsetHeight
+    this.width = canvas.container.offsetWidth
+
+    this.bounds = {
+      top: bounds.top + scroll.ASScroll.currentPos,
+      left: bounds.left,
+      width: bounds.width,
+      height: bounds.height,
+    }
+
+  }
 
   createCube() {
-    const geometry = new BoxGeometry( 250, 250, 250 )
-    const material = new MeshNormalMaterial()
+    const geometry = new BoxGeometry( 1, 1, 1 )
+    const material = new MeshBasicMaterial({map: this.texture})
     this.cube = new Mesh( geometry, material )
-    this.cube.name = 'cube'
-    CANVAS.scene.add( this.cube )
+    this.cube.scale.set(this.bounds.width, this.bounds.height,1)
+    canvas.scene.add( this.cube )
   }
 
   // ------------------------------------------------ EVENTS
   onResize() {
+    this.createBounds()
+    this.cube.scale.set(this.bounds.width, this.bounds.height,1)
+  }
 
+  // ------------------------------------------------ POSITIONS
+  setPosition() {
+    this.cube.position.x = this.bounds.left - this.width / 2 + this.bounds.width / 2
+    this.cube.position.y = scroll.ASScroll.currentPos -this.bounds.top + this.height / 2 - this.bounds.height / 2
   }
 
   // ------------------------------------------------ RAF
   update() {
-    this.cube.rotation.y += 0.01
-    this.cube.rotation.x += 0.01
-    let scroll = SCROLL.ASScroll.currentPos
-    this.cube.position.y = scroll
+    this.setPosition()
   }
 
   // ------------------------------------------------ DESTROY
   destroy() {
-    RAF.unsubscribe('WEBGLCUBE')
-    RESIZE.unsubscribe('WEBGLCUBE')
-    CANVAS.scene.remove( this.cube )
+    raf.unsubscribe('WEBGLCUBE')
+    resize.unsubscribe('WEBGLCUBE')
+    canvas.scene.remove( this.cube )
   }
 }
 
-const _instance = new Cube()
-export default _instance
+export default Cube
