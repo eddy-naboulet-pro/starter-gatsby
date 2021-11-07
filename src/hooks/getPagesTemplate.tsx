@@ -8,7 +8,7 @@ interface Props  {
   }
 }
 
-export const getPageTemplateSlices = () => {
+export const getPagesTemplate = () => {
   const data = useStaticQuery<Props>(graphql`
     query {
       page_template: allPrismicPageTemplate {

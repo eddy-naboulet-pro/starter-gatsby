@@ -1,20 +1,16 @@
 import React, { useEffect, useContext, useRef} from "react"
-import { useStaticQuery, graphql } from "gatsby"
-
 import GSAP from 'gsap'
 import {
   LoadingManager,
   TextureLoader
 } from "three"
-
 import *  as scss from './Preloader.module.scss'
-
+import { createPagesTemplateObjectArray } from "../../lib/arrayUtils"
 import {
   GlobalDispatchContext,
   GlobalStateContext,
 } from "../globalContextProvider/GlobalContextProvider"
-import { getPageTemplateSlices } from "../../hooks/get-page-template-slices"
-
+import { getPagesTemplate } from "../../hooks/getPagesTemplate"
 import texturePlaceholder from '../../../static/textures/texture-placeholder.jpg'
 import gradient from '../../../static/textures/gradient-01.jpg'
 
@@ -23,7 +19,7 @@ const componentName = 'Preloader'
 const Preloader = () => {
 
   // ------------------------------------------------ QUERIES
-  const pagesTemplateData = getPageTemplateSlices()
+  const pagesTemplateData = getPagesTemplate()
 
   // ------------------------------------------------ REFS
   const refPreloader = useRef<HTMLDivElement>()
@@ -54,28 +50,12 @@ const Preloader = () => {
     const textures = []
     textures.push(textureLoader.load(texturePlaceholder))
     textures.push(textureLoader.load(gradient))
+    
     dispatch({ type: "PUSH_TEXTURES", textures })
-
-    const pagesTemplate = []
-    pagesTemplateData.edges.forEach(({node}, index) => {
-      pagesTemplate[index] = {
-        uid: node.uid,
-        slices: node.data.body.map((item) => {
-          return {
-            id: item.id,
-            slice_type: item.slice_type,
-            webgl : null,
-            texture: item.primary && item.primary.texture ? textureLoader.load(item.primary.texture.url) : undefined,
-            items : item.items ? item.items.map((item) => {
-              return {
-                texture : textureLoader.load(item.texture.url)
-              }
-            }) : undefined
-          }
-        })
-      }
+    dispatch({ 
+      type: "PUSH_PAGES_TEMPLATE",
+      pagesTemplate : createPagesTemplateObjectArray(pagesTemplateData.edges, textureLoader)
     })
-    dispatch({ type: "PUSH_PAGES_TEMPLATE", pagesTemplate })
 
   }, [])
   
