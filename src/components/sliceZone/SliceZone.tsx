@@ -11,7 +11,7 @@ const SliceZone = ( data: IProps ) => {
     
     switch (slice.slice_type) {
       case 'cube':
-        return <Cube primary={slice.primary} id={slice.id} key={slice.id} uid={data.uid}/>
+        return <Cube data={slice} key={slice.id} uid={data.uid}/>
       default:
         return null
     }

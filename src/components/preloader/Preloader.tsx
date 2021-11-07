@@ -12,7 +12,7 @@ import *  as scss from './Preloader.module.scss'
 import {
   GlobalDispatchContext,
   GlobalStateContext,
-} from "../GlobalContextProvider/GlobalContextProvider"
+} from "../globalContextProvider/GlobalContextProvider"
 import { getPageTemplateSlices } from "../../hooks/get-page-template-slices"
 
 import texturePlaceholder from '../../../static/textures/texture-placeholder.jpg'

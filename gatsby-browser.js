@@ -1,5 +1,5 @@
 import React from "react"
-import GlobalContextProvider from "./src/components/GlobalContextProvider/GlobalContextProvider"
+import GlobalContextProvider from "./src/components/globalContextProvider/GlobalContextProvider"
 
 import './src/styles/base/reset.scss'
 import './src/styles/base/base.scss'

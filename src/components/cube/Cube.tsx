@@ -1,29 +1,19 @@
-import React, { useEffect, useContext, useRef, useState, useCallback} from "react"
+import React, { useEffect, useContext, useRef } from "react"
 import *  as scss from './Cube.module.scss'
-
-import {IBasePageTemplateData, ICube} from '../../data/dataStruct'
-
+import { IBasePageTemplateData, ICube } from '../../data/dataStruct'
 import {
-  GlobalDispatchContext,
   GlobalStateContext,
-} from "../GlobalContextProvider/GlobalContextProvider"
+} from "../globalContextProvider/GlobalContextProvider"
 import CubeWebgl from "../../componentsWebgl/cube/cube"
 
 const componentName = 'Cube'
 
 interface Iprops {
   uid: string
-  id: string
-  primary : {
-    texture : {
-      url : string
-      alt?: string
-    }
-  }
+  data: ICube
 }
 
-const Cube = (data : Iprops) => {
-
+const Cube = ({data, uid}  : Iprops) => {
   // ------------------------------------------------ CONTEXT
   const globalState = useContext(GlobalStateContext)
 
@@ -32,7 +22,7 @@ const Cube = (data : Iprops) => {
   
   // ------------------------------------------------ FIND & HANDLE COMPONENTS WEBGL
   const handleWebgl = (destroy: boolean) => {
-    const findPage = globalState.pages_template.find((page : IBasePageTemplateData)  => page.uid === data.uid)
+    const findPage = globalState.pages_template.find((page : IBasePageTemplateData)  => page.uid === uid)
     const findSlice = findPage?.slices.find((x : ICube) => x.id === data.id)
 
     if (findPage && destroy) {

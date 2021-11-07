@@ -3,11 +3,11 @@ import { site } from "./meta"
 export const identity = {
   "@id": `${site.url}/#identity`,
   "@type": `Organization`,
-  alternateName: `LekoArts`,
+  alternateName: `Eddy Naboulet`,
   description: site.description,
-  email: `hello@lekoarts.de`,
-  founder: `Lennart Jörgens`,
-  foundingDate: `2017-12-08`,
+  email: `eddy.naboulet.pro@gmail.com`,
+  founder: `Eddy Naboulet`,
+  foundingDate: `2020-05-08`,
   image: {
     "@type": `ImageObject`,
     height: `1024`,
@@ -22,11 +22,8 @@ export const identity = {
   },
   name: site.titleDefault,
   sameAs: [
-    `https://twitter.com/lekoarts_de`,
-    `https://www.youtube.com/c/LeKoArtsDE`,
-    `https://github.com/LekoArts`,
-    `https://dribbble.com/LekoArts`,
-    `https://www.behance.net/lekoarts`,
+    `https://twitter.com/`,
+    `https://github.com/`,
   ],
   url: site.url,
 }
@@ -34,11 +31,11 @@ export const identity = {
 export const creator = {
   "@id": `${site.url}/#creator`,
   "@type": `Organization`,
-  alternateName: `LekoArts`,
+  alternateName: `Eddy Naboulet`,
   description: site.description,
-  email: `hello@lekoarts.de`,
-  founder: `Lennart Jörgens`,
-  foundingDate: `2017-12-08`,
+  email: `eddy.naboulet.pro@gmail.com`,
+  founder: `Eddy Naboulet`,
+  foundingDate: `2020-05-08`,
   image: {
     "@type": `ImageObject`,
     height: `1024`,
@@ -85,57 +82,6 @@ export const breadcrumbList = (items: BreadcrumbListItem[]) => {
     name: `Breadcrumbs`,
   }
 }
-
-type ArticleProps = {
-  category: {
-    name: string
-    slug: string
-  }
-  post: {
-    title: string
-    description: string
-    slug: string
-    date: string
-    lastUpdated: string
-    year: string
-    image: string
-  }
-  isGarden: boolean
-}
-
-export const article = ({ category, post, isGarden }: ArticleProps) => ({
-  "@context": `https://schema.org`,
-  "@graph": [
-    identity,
-    creator,
-    {
-      "@type": `Article`,
-      articleSection: isGarden ? `Digital Garden` : `Writing`,
-      author: { "@id": `${site.url}/#identity` },
-      copyrightHolder: { "@id": `${site.url}/#identity` },
-      copyrightYear: post.year,
-      creator: { "@id": `${site.url}/#creator` },
-      dateModified: post.lastUpdated,
-      datePublished: post.date,
-      description: post.description,
-      genre: category.name,
-      headline: post.title,
-      image: {
-        "@type": `ImageObject`,
-        url: `${site.url}${post.image}`,
-      },
-      inLanguage: `en-US`,
-      mainEntityOfPage: `${site.url}${post.slug}`,
-      name: post.title,
-      publisher: { "@id": `${site.url}/#creator` },
-      url: `${site.url}${post.slug}`,
-    },
-    breadcrumbList([
-      { name: category.name, url: category.slug },
-      { name: post.title, url: post.slug },
-    ]),
-  ],
-})
 
 export const homepage = {
   "@context": `https://schema.org`,

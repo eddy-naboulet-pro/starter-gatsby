@@ -2,7 +2,6 @@ import React, { createContext, useReducer } from "react"
 
 const initialState = {
   theme: "light",
-  currentPage: null,
   webgl: false,
   textures: [],
   pages_template: []
@@ -14,12 +13,6 @@ export const GlobalDispatchContext = createContext(null)
 
 function reducer(state, action) {
   switch (action.type) {
-    case "SET_CURRENT_PAGE": {
-      return {
-        ...state,
-        currentPage: action.uid,
-      }
-    }
     case "TOGGLE_THEME": {
       return {
         ...state,
