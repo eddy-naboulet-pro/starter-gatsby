@@ -3,7 +3,6 @@ import {
   Scene,
   PerspectiveCamera,
   WebGLRenderer,
-  Mesh,
 } from "three"
 
 import RAF from "./raf"
@@ -16,7 +15,6 @@ interface Canvas {
   camera: PerspectiveCamera
   scene: Scene
   renderer: WebGLRenderer
-  cube : Mesh
 
 }
 

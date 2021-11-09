@@ -5,7 +5,7 @@ import {
   TextureLoader
 } from "three"
 import *  as scss from './Preloader.module.scss'
-import { createPagesTemplateObjectArray } from "../../lib/arrayUtils"
+import { getPageTemplateWebglSlice } from "../../lib/arrayUtils"
 import {
   GlobalDispatchContext,
   GlobalStateContext,
@@ -50,11 +50,11 @@ const Preloader = () => {
     const textures = []
     textures.push(textureLoader.load(texturePlaceholder))
     textures.push(textureLoader.load(gradient))
-    
+
     dispatch({ type: "PUSH_TEXTURES", textures })
     dispatch({ 
       type: "PUSH_PAGES_TEMPLATE",
-      pagesTemplate : createPagesTemplateObjectArray(pagesTemplateData.edges, textureLoader)
+      pagesTemplate : getPageTemplateWebglSlice(pagesTemplateData.edges, textureLoader)
     })
 
   }, [])

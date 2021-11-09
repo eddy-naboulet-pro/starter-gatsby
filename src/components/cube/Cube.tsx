@@ -22,14 +22,12 @@ const Cube = ({data, uid}  : Iprops) => {
   
   // ------------------------------------------------ FIND & HANDLE COMPONENTS WEBGL
   const handleWebgl = (destroy: boolean) => {
-    const findPage = globalState.pages_template.find((page : IBasePageTemplateData)  => page.uid === uid)
-    const findSlice = findPage?.slices.find((x : ICube) => x.id === data.id)
-
-    if (findPage && destroy) {
-      findSlice.webgl.destroy()
-    } else if (findPage)   {
-      const cubeObject = new CubeWebgl(findSlice.texture, refCube.current)
-      findSlice.webgl = cubeObject
+    const slice = globalState.pages_template[uid]?.slices[data.id]
+    if (slice && destroy) {
+      slice.webgl.destroy()
+    } else if (slice)   {
+      const cubeObject = new CubeWebgl(slice.texture, refCube.current)
+      slice.webgl = cubeObject
     }
   }
 

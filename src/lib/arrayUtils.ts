@@ -12,25 +12,15 @@ export const merge = (pClasses: any[], pJoin: string = " "): string => {
   }
 }
 
-export const createPagesTemplateObjectArray = (items: IMultiplePageTemplateData[], loader : TextureLoader) => {
-  const pagesTemplate = []
-  items.forEach(({node}, index : number) => {
-    pagesTemplate[index] = {
-      uid: node.uid,
-      slices: node.data.body.map((item) => {
-        return {
-          id: item.id,
-          slice_type: item.slice_type,
-          webgl : null,
-          texture: item.primary && item.primary.texture ? loader.load(item.primary.texture.url) : undefined,
-          items : item.items ? item.items.map((item) => {
-            return {
-              texture : loader.load(item.texture.url)
-            }
-          }) : undefined
-        }
-      })
-    }
-  })
-  return pagesTemplate
+export const getPageTemplateWebglSlice = (pages: IMultiplePageTemplateData[], loader: TextureLoader) => {
+  return pages.reduce((obj, item) => {
+    obj[item.node.uid] = {}
+    obj[item.node.uid]['slices'] = item.node.data.body.reduce((slice, content) => {
+      slice[content.id] = {}
+      content.primary ?  slice[content.id]['texture'] = loader.load(content.primary.texture.url) : null
+      content.items ? slice[content.id]['items'] = content.items.map((item) => loader.load(item.texture.url)) : null
+      return slice
+    }, {})
+    return obj
+  }, {})
 }
